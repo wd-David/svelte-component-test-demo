@@ -1,40 +1,33 @@
-import { render, fireEvent, waitFor } from '@testing-library/svelte';
+import { render, fireEvent, screen } from '@testing-library/svelte';
 import Counter from './Counter.svelte';
 
 describe('Test Counter.svelte', async () => {
-	it('Initial counter should be 0', () => {
-		const { container } = render(Counter);
+	it('Initial counter should be 0', async () => {
+		render(Counter);
 
-		const counter = container.querySelector('.counter-digits > strong:nth-child(2)')?.innerHTML;
-		expect(counter).toEqual('0');
+		const counter = await screen.findByText('0')
+		expect(counter).toBeInTheDocument();
 	});
 	it('Test decrease', async () => {
-		const { container } = render(Counter);
+		render(Counter);
 
-		const decreaseButton = container.querySelector(
-			'button[aria-label="Decrease the counter by one"]'
-		) as HTMLButtonElement;
+		const decreaseButton = screen.getByLabelText('Decrease the counter by one')
 
 		await fireEvent.click(decreaseButton);
 		await fireEvent.click(decreaseButton);
 
-		await waitFor(() => {
-			const counter = container.querySelector('.counter-digits > strong:nth-child(2)')?.innerHTML;
-			expect(counter).toEqual('-2');
-		});
+		const counter = await screen.findByText('-2')
+		expect(counter).toBeInTheDocument();
+
 	});
 	it('Test increase', async () => {
-		const { container } = render(Counter);
+		render(Counter);
 
-		const increaseButton = container.querySelector(
-			'button[aria-label="Increase the counter by one"]'
-		) as HTMLButtonElement;
+		const increaseButton = screen.getByLabelText('Increase the counter by one')
 
 		await fireEvent.click(increaseButton);
 
-		await waitFor(() => {
-			const counter = container.querySelector('.counter-digits > strong:nth-child(2)')?.innerHTML;
-			expect(counter).toEqual('1');
-		});
+		const counter = await screen.findByText('1')
+		expect(counter).toBeInTheDocument();
 	});
 });
