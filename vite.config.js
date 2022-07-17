@@ -7,7 +7,7 @@ const config = {
 		globals: true,
 		environment: 'jsdom',
 		include: ['src/**/*.{test,spec}.ts'],
-		setupFiles: ['./setupVitest.js']
+		setupFiles: ['./setupTest.js']
 	}
 };
 
