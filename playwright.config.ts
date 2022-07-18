@@ -1,21 +1,11 @@
-import type { PlaywrightTestConfig } from '@playwright/experimental-ct-svelte';
-import { resolve } from 'path';
+import type { PlaywrightTestConfig } from '@playwright/test';
 
 const config: PlaywrightTestConfig = {
 	webServer: {
 		command: 'npm run build && npm run preview',
 		port: 4173
 	},
-	testMatch: 'tests/**/*.ts',
-	use: {
-		ctViteConfig: {
-			resolve: {
-				alias: {
-					$lib: resolve('src/lib')
-				}
-			}
-		}
-	}
+	testDir: 'tests/e2e',
 };
 
 export default config;
