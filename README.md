@@ -1,38 +1,58 @@
-# create-svelte
+# Test Svelte Component Using Vitest or Playwright (or Both!)
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+> [Svelte Component Test Demo Repo](https://github.com/davipon/svelte-component-test-demo)
 
-## Creating a project
+## Different types of test
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Unit Test
+- Component Test/ Integration Test
+- End-to-end (E2E) test
 
-```bash
-# create a new project in the current directory
-npm init svelte
+## Test Runners
 
-# create a new project in my-app
-npm init svelte my-app
-```
+- Vitest
+- Playwright
 
-## Developing
+## Vitest + `@testing-library/svelte`
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+- [svelte-add-vitest](https://github.com/davipon/svelte-add-vitest)
+- Dependencies
+- Share the same `vite.config.js`
 
-```bash
-npm run dev
+## Playwright Expermimental Component Test
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+[Experimental: components](https://playwright.dev/docs/test-components#how-to-get-started)
 
-## Building
+- Use `vite` under the hood
+- Less dependencies
 
-To create a production version of your app:
+### Use Svelte Demo Project
 
-```bash
-npm run build
-```
+1. `npm create svelte my-app`
 
-You can preview the production build with `npm run preview`.
+2. `npm install @playwright/experimental-ct-svelte`
 
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+3. Create a folder `playwright` under your project root folder
+
+
+## Vitest (as test runner) + Playwright
+
+[Use Playwright with Vitest as test runner](https://github.com/vitest-dev/vitest/tree/main/examples/playwright)
+
+## Comparison
+
+| Unit Test | Component/ Integration Test | E2E Test |
+| --------- | ----------- | ------- |
+| Vitest      |`vitest` + `@testing-library/svelte` or `@playwright/experimental-ct-svelte`| Playwright   |
+
+## Resources
+
+### Articles
+
+- [Unit Testing Svelte Components](https://sveltesociety.dev/recipes/testing-and-debugging/unit-testing-svelte-component)
+- [Testing a Svelte app with Vitest](https://blog.logrocket.com/testing-svelte-app-vitest/)
+
+### Videos
+
+- [Test SvelteKit with Playwright 🧪 LIVE Coding & Chill](https://youtu.be/Me6qEMzmlaU)
+- [Testing in Svelte by Jess Sachs (Svelte Sirens)](https://youtu.be/-GKRH0KQ_j0)
