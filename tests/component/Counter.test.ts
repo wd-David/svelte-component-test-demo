@@ -1,14 +1,14 @@
 import { test, expect } from '@playwright/experimental-ct-svelte';
 import Counter from '$lib/Counter.svelte';
 
-test('Test Counter.svelte', async ({ page, mount }) => {
-	await mount(Counter);
+test('Test Counter.svelte', async ({ mount }) => {
+	const component = await mount(Counter);
 	// Initial counter is "0"
-	await expect(page.locator('text="0"'), 'Should be 0').toBeVisible();
+	await expect(component).toContainText("0");
 	// Decrease the counter
-	await page.locator('[aria-label="Decrease the counter by one"]').dblclick();
-	await expect(page.locator('text="-2"'), 'Should be -2').toBeVisible();
+	await component.locator('[aria-label="Decrease the counter by one"]').dblclick();
+	await expect(component).toContainText('-2');
 	// Increase the counter
-	await page.locator('[aria-label="Increase the counter by one"]').click();
-	await expect(page.locator('text="-1"'), 'Should be -1').toBeVisible();
+	await component.locator('[aria-label="Increase the counter by one"]').click();
+	await expect(component).toContainText('-1');
 });
