@@ -1,4 +1,4 @@
-# Test Svelte Component Using Vitest & Playwright (Unfinished)
+# Test Svelte Component Using Vitest & Playwright (WIP )
 
 Hi 👋, I'm David Peng.
 It's been a while since my last blog post.
@@ -10,13 +10,14 @@ In this article I'll focus on the basic setup of Vitest & Playwright to test our
 
 I'll also write about the advanced component test and mocking (Svelte runtime module & networking) in my next blog post, stay tuned!
 
-## Different types of test
+## Different types of test in Svelte
 
-Here's a breif introduction of each type:
+Here's a breif introduction of each type (my point of view):
 
-- Unit Test
-- Component Test/ Integration Test
-- End-to-end (E2E) test
+- **Unit Test**: Test the smallest piece of code, e.g., a simple function.
+- **Integration Test**: Test group of functions, e.g., fetching and transforming data
+- **Component Test**: Test the behavior/ transition of a UI component, e.g., form validation
+- **End-to-end (E2E) test**: Complete user journey, e.g., login to a website and a series of operations
 
 ## Test Runners
 
