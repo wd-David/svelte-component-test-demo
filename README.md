@@ -21,8 +21,22 @@ Here's a breif introduction of each type (my point of view):
 
 ## Test Runners
 
-- [Vitest](https://vitest.dev/): A Vite-native unit test framework.
-- [Playwright](https://playwright.dev/): A framework for Web Testing and Automation.
+### [Vitest](https://vitest.dev/): A Vite-native unit test framework. (alternative: [Jest](https://jestjs.io/))
+
+You might hear that more and more Svelte Developers migrating their tests from Jest to Vitest in the past few months.
+> A great read here: [Testing a Svelte app with Vitest](https://blog.logrocket.com/testing-svelte-app-vitest/)
+
+Vitest is way faster because of Vite and it's a great fit with SvelteKit (use vite under the hood). Another plus is you can remove most of your babel stuff 🎊.
+
+### [Playwright](https://playwright.dev/): A framework for Web Testing and Automation. (alternative: [Cypress](https://www.cypress.io/))
+
+
+
+### When to use each test runners?
+
+| Unit Test | Component Test | E2E Test |
+| --------- | ----------- | ------- |
+| Vitest      |`vitest` + `@testing-library/svelte` or `@playwright/experimental-ct-svelte`| Playwright   |
 
 ## Vitest + `@testing-library/svelte`
 
@@ -225,15 +239,13 @@ We can solve this by adding `include` in your `tsconfig.json`:
 
 I haven't tried this combination in my projects, but you can check the example from the Vitest GitHub repo: [Use Playwright with Vitest as test runner](https://github.com/vitest-dev/vitest/tree/main/examples/playwright)
 
-## Comparison
+## Wrapping Up
 
 I've always tried to avoid writing tests that "reverse engineer" the functionality of complex functions or components, something like writing a helper function which has more lines of code than the function I want to test, or create yet another wrapper component just to test your component.
 
 It doesn't make sense to me to mock how a framework mounts a component instead of testing it from a user's perspective.
 
-| Unit Test | Component/ Integration Test | E2E Test |
-| --------- | ----------- | ------- |
-| Vitest      |`vitest` + `@testing-library/svelte` or `@playwright/experimental-ct-svelte`| Playwright   |
+
 
 ## Resources
 
