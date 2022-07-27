@@ -4,6 +4,8 @@ The blog post is published at Hashnode: [Test Svelte Component Using Vitest & Pl
 
 ---
 
+# Test Svelte Component Using Vitest & Playwright
+
 Hi 👋, I'm David Peng.
 It's been a while since my last blog post.
 
@@ -25,24 +27,6 @@ Here's a brief introduction of each type (my point of view):
 
 ## Test Runners
 
-<<<<<<< HEAD
-### [Vitest](https://vitest.dev/): A Vite-native unit test framework. (alternative: [Jest](https://jestjs.io/))
-
-You might hear that more and more Svelte Developers migrating their tests from Jest to Vitest in the past few months.
-> A great read here: [Testing a Svelte app with Vitest](https://blog.logrocket.com/testing-svelte-app-vitest/)
-
-Vitest is way faster because of Vite and it's a great fit with SvelteKit (use vite under the hood). Another plus is you can remove most of your babel stuff 🎊.
-
-### [Playwright](https://playwright.dev/): A framework for Web Testing and Automation. (alternative: [Cypress](https://www.cypress.io/))
-
-
-
-### When to use each test runners?
-
-| Unit Test | Component Test | E2E Test |
-| --------- | ----------- | ------- |
-| Vitest      |`vitest` + `@testing-library/svelte` or `@playwright/experimental-ct-svelte`| Playwright   |
-=======
 ### [Vitest](https://vitest.dev/): A Vite-native unit test framework. (alternative: [Jest](https://jestjs.io/), [uvu](https://github.com/lukeed/uvu))
 
 You might hear more Svelte Developers migrating their tests from Jest to Vitest in the past few months.
@@ -79,7 +63,6 @@ Let's see how to test the Svelte component using Vitest & Playwright.
 > Since we're going to talk about the component test, I like to share this clip from JS Party: [[Twitter]accidentally testable](https://twitter.com/jspartyfm/status/1551932536493953029?s=21&t=iZQN92C8IAr8EZAUtljCbQ), you can also listen to the episode #233
 
 
->>>>>>> 93c90a2 (docs: update README.md)
 
 ## Vitest + `@testing-library/svelte`
 
@@ -285,16 +268,12 @@ I've spent a considerable amount of time writing component tests using both Vite
 - **Vitest + Testing Library**: Setting up your testing environment takes more steps and dependencies. It also took me a while to grasp the concept and best practices of Testing Library and use query/ assertions properly, but once you have more confidence, you'd have a pleasant DX.
 - **Playwright Experimental Component Test**: You can directly use most of Playwright's goodness like [fixtures](https://playwright.dev/docs/api/class-fixtures), [network intercepting](https://playwright.dev/docs/network), in your component test, and its syntax are intuitive and pretty handy. While it's still in the experimental phase, getting more stable may take a while.
 
-<<<<<<< HEAD
-
-=======
 In my opinion, Vitest + Testing Library would probably be a better choice at this moment. Despite that Vitest hasn't hit 1.0, my personal experience of migrating from Jest is pretty smooth. Also, Testing Library is stable and used by many companies.
 
 Thank you for your reading.
 You can follow me on Twitter [@davipon](https://twitter.com/davipon)
 
 Please leave your thoughts and experience below. Love to hear your feedback!
->>>>>>> 93c90a2 (docs: update README.md)
 
 ## Resources
 
