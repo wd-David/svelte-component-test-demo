@@ -1,26 +1,31 @@
-# Test Svelte Component Using Vitest & Playwright (WIP )
+# svelte-component-test-demo
+
+The blog post is published at Hashnode: [Test Svelte Component Using Vitest & Playwright](https://davipon.hashnode.dev/test-svelte-component-using-vitest-playwright)
+
+---
 
 Hi 👋, I'm David Peng.
 It's been a while since my last blog post.
 
 In the last two months, I added 100+ unit/ component/ e2e tests in my Svelte project (yeah, I didn't do TDD because I wasn't familiar with testing enough 😅).
-I experimented with different test runners, kept measuring DX and try to find my ideal toolset of testing. I'd love to share some of my learnings and thoughts here.
+I experimented with different test runners, kept measuring DX, and tried to find my ideal toolset for testing. I'd love to share some of my learnings and thoughts here.
 
-In this article I'll focus on the basic setup of Vitest & Playwright to test our Svelte components. You can check the demo repo here: [Svelte Component Test Demo Repo](https://github.com/davipon/svelte-component-test-demo)
+In this article, I'll focus on the basic setup of Vitest & Playwright to test our Svelte components. You can check the demo repo here: [Svelte Component Test Demo Repo](https://github.com/davipon/svelte-component-test-demo)
 
-I'll also write about the advanced component test and mocking (Svelte runtime module & networking) in my next blog post, stay tuned!
+In my next blog post, I'll also write about the advanced component test and mocking (Svelte runtime module & networking). Stay tuned!
 
-## Different types of test in Svelte
+## Different types of test
 
-Here's a breif introduction of each type (my point of view):
+Here's a brief introduction of each type (my point of view):
 
 - **Unit Test**: Test the smallest piece of code, e.g., a simple function.
 - **Integration Test**: Test group of functions, e.g., fetching and transforming data
-- **Component Test**: Test the behavior/ transition of a UI component, e.g., form validation
+- **Component Test**: Test the behavior/ transition of a UI component, e.g., form interaction, open a modal
 - **End-to-end (E2E) test**: Complete user journey, e.g., login to a website and a series of operations
 
 ## Test Runners
 
+<<<<<<< HEAD
 ### [Vitest](https://vitest.dev/): A Vite-native unit test framework. (alternative: [Jest](https://jestjs.io/))
 
 You might hear that more and more Svelte Developers migrating their tests from Jest to Vitest in the past few months.
@@ -37,10 +42,48 @@ Vitest is way faster because of Vite and it's a great fit with SvelteKit (use vi
 | Unit Test | Component Test | E2E Test |
 | --------- | ----------- | ------- |
 | Vitest      |`vitest` + `@testing-library/svelte` or `@playwright/experimental-ct-svelte`| Playwright   |
+=======
+### [Vitest](https://vitest.dev/): A Vite-native unit test framework. (alternative: [Jest](https://jestjs.io/), [uvu](https://github.com/lukeed/uvu))
+
+You might hear more Svelte Developers migrating their tests from Jest to Vitest in the past few months.
+
+Vitest is way faster than Jest because of Vite goodness, and it's a great fit with SvelteKit (use vite under the hood). Another plus is you can remove all your jest/ babel config 🎊.
+
+> A great read here: [Testing a Svelte app with Vitest](https://blog.logrocket.com/testing-svelte-app-vitest/)
+
+### [Playwright](https://playwright.dev/): A framework for Web Testing and Automation. (alternative: [Cypress](https://www.cypress.io/))
+
+Playwright is a recommended E2E test runner in the Svelte community. You can also find Playwright as an option in `create-svelte`.
+
+### When to use each test runner?
+
+Even though Vitest & Playwright are both test runners, they have a different focus and testing scenarios.
+
+Vitest is incredibly fast because of its instant Hot Module Reload; it only reruns the test whenever the test, source code, or dependencies are changed, so it's suitable for the unit, integration tests.
+
+While Playwright was created specifically for E2E testing, you need to build your Svelte app and start the server to test your app, which is much similar to the production.
+
+But when it comes to the component test, we have a couple of choices:
+
+- Unit testing runners like Vitest, Jest, or uvu + Testing Library
+- Playwright/ Cypress component test (both powered by Vite)
+- Storybook (I haven't tried it 😁)
+
+
+| Unit Test | ✨ Component Test ✨ | E2E Test |
+| --------- | ----------- | ------- |
+| Vitest      |`vitest` + `@testing-library/svelte` or `@playwright/experimental-ct-svelte`| Playwright   |
+
+Let's see how to test the Svelte component using Vitest & Playwright.
+
+> Since we're going to talk about the component test, I like to share this clip from JS Party: [[Twitter]accidentally testable](https://twitter.com/jspartyfm/status/1551932536493953029?s=21&t=iZQN92C8IAr8EZAUtljCbQ), you can also listen to the episode #233
+
+
+>>>>>>> 93c90a2 (docs: update README.md)
 
 ## Vitest + `@testing-library/svelte`
 
-> You can follow below steps to setup Vitest or use the Svelte Adder: [svelte-add-vitest](https://github.com/davipon/svelte-add-vitest)
+> You can follow the below steps to setup Vitest or use the Svelte Adder: [svelte-add-vitest](https://github.com/davipon/svelte-add-vitest)
 
 ### Take Svelte Demo App (TypeScript) for example
 
@@ -66,7 +109,7 @@ const config = {
 
 export default config;
 ```
-4. Create `setupTest.js` and extend `jest-dom` asserions/ matchers in Vitest:
+4. Create `setupTest.js` and extend `jest-dom` assertions/ matchers in Vitest:
 ```js
 import matchers from '@testing-library/jest-dom/matchers';
 import { expect, vi } from 'vitest';
@@ -93,28 +136,24 @@ import Counter from './Counter.svelte';
 describe('Test Counter.svelte', async () => {
   it('Initial counter should be 0', async () => {
     render(Counter);
-
-    const counter = await screen.findByText('0');
-    expect(counter).toBeInTheDocument();
+    expect(screen.getByText('0')).toBeInTheDocument();
   });
   it('Test decrease', async () => {
     render(Counter);
-
     const decreaseButton = screen.getByLabelText('Decrease the counter by one');
-
+    // Decrease by two
     await fireEvent.click(decreaseButton);
     await fireEvent.click(decreaseButton);
-
+    // Wait for animation
     const counter = await screen.findByText('-2');
     expect(counter).toBeInTheDocument();
   });
   it('Test increase', async () => {
     render(Counter);
-
     const increaseButton = screen.getByLabelText('Increase the counter by one');
-
+    // Increase by one
     await fireEvent.click(increaseButton);
-
+    // Wait for animation
     const counter = await screen.findByText('1');
     expect(counter).toBeInTheDocument();
   });
@@ -122,7 +161,7 @@ describe('Test Counter.svelte', async () => {
 
 ```
 
-> The benefit of using `screen` is you no longer need to keep the render call destructure up-to-date as you add/remove the queries you need. You only need to type screen. and let your editor's magic autocomplete take care of the rest. (ref: [Common mistakes with React Testing Library #Not using `screen`](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#not-using-screen))
+> The benefit of using `screen` is you no longer need to keep the render call destructure up-to-date as you add/remove the queries you need. You only need to type screen. And let your editor's magic autocomplete take care of the rest. (ref: [Common mistakes with React Testing Library #Not using `screen`](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library#not-using-screen))
 
 7. Add `test` script in `package.json`:
 ```json
@@ -136,7 +175,7 @@ describe('Test Counter.svelte', async () => {
 
 ## Playwright Experimental Component Test
 
-This experimental component test is powered by Vite, for more details please read the doc and the overview video from Playwright:
+This experimental component test is powered by Vite. For more details, please read the doc and the overview video from Playwright:
 
 - [Experimental: components](https://playwright.dev/docs/test-components#how-to-get-started)
 
@@ -170,7 +209,7 @@ const config: PlaywrightTestConfig = {
 export default config;
 ```
 
-4. Create several files in your Svelte porject workspace:
+4. Create several files in your Svelte project workspace:
 
 `playwright/index.html`
 
@@ -187,7 +226,7 @@ export default config;
 
 ```js
 // Apply theme here, add anything your component needs at runtime here.
-// Here we import the demo project's css file
+// Here, we import the demo project's css file
 import '../src/app.css';
 ```
 
@@ -241,13 +280,27 @@ I haven't tried this combination in my projects, but you can check the example f
 
 ## Wrapping Up
 
-I've always tried to avoid writing tests that "reverse engineer" the functionality of complex functions or components, something like writing a helper function which has more lines of code than the function I want to test, or create yet another wrapper component just to test your component.
+I've spent a considerable amount of time writing component tests using both Vitest & Playwright. Here are some of my thoughts and a reflection of DX (developer experience):
 
-It doesn't make sense to me to mock how a framework mounts a component instead of testing it from a user's perspective.
+- **Vitest + Testing Library**: Setting up your testing environment takes more steps and dependencies. It also took me a while to grasp the concept and best practices of Testing Library and use query/ assertions properly, but once you have more confidence, you'd have a pleasant DX.
+- **Playwright Experimental Component Test**: You can directly use most of Playwright's goodness like [fixtures](https://playwright.dev/docs/api/class-fixtures), [network intercepting](https://playwright.dev/docs/network), in your component test, and its syntax are intuitive and pretty handy. While it's still in the experimental phase, getting more stable may take a while.
 
+<<<<<<< HEAD
 
+=======
+In my opinion, Vitest + Testing Library would probably be a better choice at this moment. Despite that Vitest hasn't hit 1.0, my personal experience of migrating from Jest is pretty smooth. Also, Testing Library is stable and used by many companies.
+
+Thank you for your reading.
+You can follow me on Twitter [@davipon](https://twitter.com/davipon)
+
+Please leave your thoughts and experience below. Love to hear your feedback!
+>>>>>>> 93c90a2 (docs: update README.md)
 
 ## Resources
+
+### Discussion
+
+[sveltejs/kit: Vitest for unit testing #5285](https://github.com/sveltejs/kit/discussions/5285)
 
 ### Issues
 
@@ -257,6 +310,7 @@ It doesn't make sense to me to mock how a framework mounts a component instead o
 
 - [Unit Testing Svelte Components (Svelte Society)](https://sveltesociety.dev/recipes/testing-and-debugging/unit-testing-svelte-component)
 - [Testing a Svelte app with Vitest](https://blog.logrocket.com/testing-svelte-app-vitest/)
+- [Component Driven User Interfaces](https://www.componentdriven.org/)
 
 ### Videos
 
